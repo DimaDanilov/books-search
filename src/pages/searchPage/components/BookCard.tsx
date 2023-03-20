@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { globalStyles } from "../../../styles/style";
-import book_placeholder from "../../../assets/icons/book_placeholder.svg"; // Tell webpack this JS file uses this image
+import book_placeholder from "../../../assets/icons/book_placeholder.svg";
 import { Book } from "../../../models/Book";
 import { NavLink } from "react-router-dom";
+import { CategoryLink } from "../../../ui/CategoryLink";
 
 export const BookCard = ({ book }: { book: Book }) => {
   return (
     <Container to={`/book?id=${book.id}`}>
-      <BookImage src={book.img || book_placeholder} alt="Book image" />
-      <Category href="">{book.category}</Category>
+      <BookImage src={book.img || book_placeholder} alt="Book" />
+      <CategoryLink link={book.category}>{book.category}</CategoryLink>
       <BookTitle>{book.title}</BookTitle>
       <BookAuthor>{book.author}</BookAuthor>
     </Container>
@@ -22,10 +23,6 @@ const Container = styled(NavLink)`
 `;
 const BookImage = styled.img`
   width: 100%;
-`;
-const Category = styled.a`
-  color: ${globalStyles.colors.grey};
-  font-size: ${globalStyles.fonts.a};
 `;
 const BookTitle = styled.h4`
   color: ${globalStyles.colors.black};

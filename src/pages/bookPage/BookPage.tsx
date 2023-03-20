@@ -1,8 +1,13 @@
+import styled from "styled-components";
 import { Book } from "../../models/Book";
+import book_placeholder from "../../assets/icons/book_placeholder.svg";
+import { Container } from "../../ui/Container";
+import { CategoryLink } from "../../ui/CategoryLink";
+import { globalStyles } from "../../styles/style";
 
 const testBook: Book = {
   id: 5,
-  img: "",
+  img: "https://cdn.eksmo.ru/v2/ITD000000001128356/COVER/cover1__w600.jpg",
   category: "Computers",
   title: "Книга 5",
   author: "Автор 5",
@@ -12,10 +17,46 @@ const testBook: Book = {
 
 export const BookPage = () => {
   return (
-    <>
-      <h1>{testBook.id}</h1>;<h1>{testBook.category}</h1>;
-      <h1>{testBook.title}</h1>;<h1>{testBook.author}</h1>;
-      <h1>{testBook.description}</h1>;
-    </>
+    <BookContainer>
+      <BookImage src={testBook.img || book_placeholder} alt="Book" />
+      <BookInfoContainer>
+        <CategoryLink link={testBook.category}>
+          {testBook.category}
+        </CategoryLink>
+        <Title>{testBook.title}</Title>
+        <Author>{testBook.author}</Author>
+        <Description>{testBook.description}</Description>
+      </BookInfoContainer>
+    </BookContainer>
   );
 };
+
+const BookContainer = styled(Container)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+const BookImage = styled.img`
+  width: 30%;
+  align-self: flex-start;
+`;
+const BookInfoContainer = styled.div`
+  width: 60%;
+  padding: 3vh 0;
+`;
+const Title = styled.h1`
+  color: ${globalStyles.colors.black};
+  font-size: ${globalStyles.fonts.h1};
+`;
+const Author = styled.h3`
+  color: ${globalStyles.colors.grey};
+  font-size: ${globalStyles.fonts.h3};
+`;
+const Description = styled.h3`
+  margin: 3vh auto;
+  padding: 20px;
+  font-size: ${globalStyles.fonts.h3};
+  color: ${globalStyles.colors.black};
+  border: 1.5px solid ${globalStyles.colors.grey};
+  border-radius: 15px;
+`;

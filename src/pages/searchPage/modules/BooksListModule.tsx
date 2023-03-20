@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Book } from "../../../models/Book";
 import { globalStyles } from "../../../styles/style";
+import { Container } from "../../../ui/Container";
 import { BookCard } from "../components/BookCard";
 
 const books: Array<Book> = [
@@ -62,10 +63,6 @@ export const BooksListModule = () => {
   );
 };
 
-const Container = styled.div`
-  width: 95%;
-  margin: 0 auto;
-`;
 const BooksListStatus = styled.h2`
   color: ${globalStyles.colors.black};
   text-align: center;
