@@ -9,34 +9,44 @@ const books: Array<Book> = [
     category: "Computers",
     title: "Книга 1",
     author: "Автор 1",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
     img: "",
     category: "Computers",
     title: "Книга 2",
     author: "Автор 2",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
     img: "",
     category: "Computers",
     title: "Книга 3",
     author: "Автор 3",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
     img: "",
     category: "Computers",
     title: "Книга 4",
     author: "Автор 4",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
     img: "",
     category: "Computers",
     title: "Книга 5",
     author: "Автор 5",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
 ];
 
-const bookCards = books.map((book) => <BookCard {...book} />);
+const bookCards = books.map((book) => <BookCard book={book} />);
 
 export const BooksListModule = () => {
   return (

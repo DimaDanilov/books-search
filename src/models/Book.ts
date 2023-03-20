@@ -3,4 +3,5 @@ export type Book = {
   category: string;
   title: string;
   author: string;
+  description: string;
 };
