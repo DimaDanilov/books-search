@@ -1,8 +1,8 @@
 import "./App.css";
-import { SearchSection } from "./modules/search/SearchSection";
+import { SearchModule } from "./modules/search/SearchModule";
 
 function App() {
-  return <SearchSection></SearchSection>;
+  return <SearchModule></SearchModule>;
 }
 
 export default App;
