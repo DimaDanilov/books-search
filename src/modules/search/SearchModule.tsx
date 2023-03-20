@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import search_background from "../../assets/search_background.jpg"; // Tell webpack this JS file uses this image
+import search_background from "../../assets/images/search_background.jpg"; // Tell webpack this JS file uses this image
 import { globalStyles } from "../../styles/style";
 import { SearchForm } from "./components/SearchForm";
 
