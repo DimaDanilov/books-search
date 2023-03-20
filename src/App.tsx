@@ -1,13 +1,14 @@
 import "./App.css";
-import { BooksListModule } from "./modules/booksList/BooksListModule";
-import { SearchModule } from "./modules/search/SearchModule";
+import { Route, Routes } from "react-router-dom";
+import { BookPage } from "./pages/bookPage/BookPage";
+import { SearchPage } from "./pages/searchPage/SearchPage";
 
 function App() {
   return (
-    <>
-      <SearchModule></SearchModule>
-      <BooksListModule></BooksListModule>
-    </>
+    <Routes>
+      <Route path="/book" element={<BookPage />} />
+      <Route path="*" element={<SearchPage />} />
+    </Routes>
   );
 }
 

@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { globalStyles } from "../../../styles/style";
 import book_placeholder from "../../../assets/icons/book_placeholder.svg"; // Tell webpack this JS file uses this image
 import { Book } from "../../../models/Book";
+import { NavLink } from "react-router-dom";
 
 export const BookCard = ({ book }: { book: Book }) => {
   return (
-    <Container>
+    <Container to={`/book?id=${book.id}`}>
       <BookImage src={book.img || book_placeholder} alt="Book image" />
       <Category href="">{book.category}</Category>
       <BookTitle>{book.title}</BookTitle>
@@ -14,9 +15,10 @@ export const BookCard = ({ book }: { book: Book }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled(NavLink)`
   background-color: #f3f2f1;
   padding: 5%;
+  text-decoration: none;
 `;
 const BookImage = styled.img`
   width: 100%;

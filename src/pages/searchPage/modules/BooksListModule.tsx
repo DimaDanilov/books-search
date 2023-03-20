@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Book } from "../../models/Book";
-import { globalStyles } from "../../styles/style";
-import { BookCard } from "./components/BookCard";
+import { Book } from "../../../models/Book";
+import { globalStyles } from "../../../styles/style";
+import { BookCard } from "../components/BookCard";
 
 const books: Array<Book> = [
   {
+    id: 1,
     img: "",
     category: "Computers",
     title: "Книга 1",
@@ -13,6 +14,7 @@ const books: Array<Book> = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
+    id: 2,
     img: "",
     category: "Computers",
     title: "Книга 2",
@@ -21,6 +23,7 @@ const books: Array<Book> = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
+    id: 3,
     img: "",
     category: "Computers",
     title: "Книга 3",
@@ -29,6 +32,7 @@ const books: Array<Book> = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
+    id: 4,
     img: "",
     category: "Computers",
     title: "Книга 4",
@@ -37,6 +41,7 @@ const books: Array<Book> = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
   },
   {
+    id: 5,
     img: "",
     category: "Computers",
     title: "Книга 5",
@@ -46,7 +51,7 @@ const books: Array<Book> = [
   },
 ];
 
-const bookCards = books.map((book) => <BookCard book={book} />);
+const bookCards = books.map((book) => <BookCard key={book.id} book={book} />);
 
 export const BooksListModule = () => {
   return (
