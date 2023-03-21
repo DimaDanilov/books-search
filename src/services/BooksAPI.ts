@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Book, IBooksArray } from "../models/Book";
+import { Sort } from "../models/Sort";
 import { BooksAdapter } from "./BooksAdapter";
 
 const BASE_URL = "https://www.googleapis.com/books/v1";
@@ -18,14 +19,20 @@ export const getBook = async (id: string): Promise<Book> => {
     });
 };
 
-export const getBooks = async (searchQuery: string): Promise<IBooksArray> => {
+export const getBooks = async (
+  searchQuery: string,
+  sortType: Sort
+): Promise<IBooksArray> => {
   return axios
-    .get(`${BASE_URL}/volumes?q=${searchQuery}&key=${API_KEY}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
+    .get(
+      `${BASE_URL}/volumes?q=${searchQuery}&orderBy=${sortType}&key=${API_KEY}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
     .then((response) => {
       return {
         books: response.data.items

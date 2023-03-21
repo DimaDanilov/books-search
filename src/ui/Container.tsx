@@ -1,12 +1,9 @@
 import styled from "styled-components";
+import { IChildrenProps } from "../models/ChildrenProps";
 
-export const Container = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => <StyledContainer className={className}>{children}</StyledContainer>;
+export const Container = ({ children, ...props }: IChildrenProps) => {
+  return <StyledContainer {...props}>{children}</StyledContainer>;
+};
 
 const StyledContainer = styled.div`
   width: 95%;

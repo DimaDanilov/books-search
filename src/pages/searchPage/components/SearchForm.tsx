@@ -3,6 +3,9 @@ import { globalStyles } from "../../../styles/style";
 import { useSearchStore } from "../store/SearchStore";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
+import { SortSelect } from "./SortSelect";
+import { Label } from "../../../ui/Label";
+import { Select } from "../../../ui/Select";
 
 const onFormSubmit = () => (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -50,11 +53,7 @@ export const SearchForm = observer(() => {
           </Select>
         </FormBlock>
         <FormBlock>
-          <Label htmlFor="sort">Sorting by</Label>
-          <Select name="sort" id="sort">
-            <option>relevance </option>
-            <option>newest</option>
-          </Select>
+          <SortSelect />
         </FormBlock>
       </FormBlock>
     </Form>
@@ -73,17 +72,7 @@ const FormBlock = styled.div`
   width: 50%;
   margin: 5px 10px;
 `;
-const Label = styled.label`
-  color: ${globalStyles.colors.white};
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-`;
 const TextInput = styled.input`
-  width: 100%;
-  height: ${globalStyles.form.formInputHeight};
-`;
-const Select = styled.select`
   width: 100%;
   height: ${globalStyles.form.formInputHeight};
 `;

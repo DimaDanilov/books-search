@@ -2,6 +2,7 @@ import React from "react";
 import { makeAutoObservable } from "mobx";
 import { IBooksArray } from "../../../models/Book";
 import { getBooks } from "../../../services/BooksAPI";
+import { Sort } from "../../../models/Sort";
 
 class SearchStore {
   booksArray: IBooksArray = {
@@ -9,6 +10,7 @@ class SearchStore {
     totalItems: 0,
   };
   searchField: string = "";
+  sortType: Sort = Sort["revelance"];
 
   constructor() {
     makeAutoObservable(this);
@@ -20,13 +22,17 @@ class SearchStore {
     }
   }
 
+  setSortType(type: Sort) {
+    this.sortType = type;
+  }
+
   setBooks(books: IBooksArray) {
     this.booksArray = books;
   }
 
   async fetchBooks() {
     if (this.searchField) {
-      const data = await getBooks(this.searchField);
+      const data = await getBooks(this.searchField, this.sortType);
       this.setBooks(data);
     }
   }
