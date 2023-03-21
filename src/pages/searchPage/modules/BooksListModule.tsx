@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
@@ -8,13 +9,19 @@ import { useSearchStore } from "../store/SearchStore";
 
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search");
+
   const bookCards = searchStore.booksArray.books?.map((book) => {
     return <BookCard key={book.id} book={book} />;
   });
 
   useEffect(() => {
     searchStore.fetchBooks();
-  }, []);
+    if (searchQuery) {
+      searchStore.setSearchField(searchQuery);
+    }
+  }, [searchQuery]);
 
   return (
     <Container>

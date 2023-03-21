@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { globalStyles } from "../../../styles/style";
 import { useSearchStore } from "../store/SearchStore";
 import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 
 const onFormSubmit = () => (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 };
 
 export const SearchForm = observer(() => {
+  let navigate = useNavigate();
   const searchStore = useSearchStore();
 
   const onSearchFieldChange =
@@ -16,7 +18,9 @@ export const SearchForm = observer(() => {
     };
 
   const onSearchClick = () => {
-    searchStore.fetchBooks();
+    const currentUrlParams = new URLSearchParams(window.location.search);
+    currentUrlParams.set("search", searchStore.searchField);
+    navigate(window.location.pathname + "?" + currentUrlParams.toString());
   };
 
   return (

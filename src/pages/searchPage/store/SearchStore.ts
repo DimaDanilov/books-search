@@ -15,7 +15,9 @@ class SearchStore {
   }
 
   setSearchField(text: string) {
-    this.searchField = text;
+    if (text !== this.searchField) {
+      this.searchField = text;
+    }
   }
 
   setBooks(books: IBooksArray) {
