@@ -4,34 +4,45 @@ import book_placeholder from "../../assets/icons/book_placeholder.svg";
 import { Container } from "../../ui/Container";
 import { CategoryLink } from "../../ui/CategoryLink";
 import { globalStyles } from "../../styles/style";
-
-const testBook: Book = {
-  id: "5",
-  img: {
-    img_small: "",
-    img_big:
-      "https://cdn.eksmo.ru/v2/ITD000000001128356/COVER/cover1__w600.jpg",
-  },
-  categories: ["Computers"],
-  title: "Книга 5",
-  authors: ["Автор 5", "Автор 6"],
-  description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni nisi facilis quisquam temporibus ut ex magnam, autem consequatur ipsum dignissimos quam laborum suscipit amet voluptate dicta doloremque maiores corporis! Reprehenderit eos fugiat error dolores quasi eaque sequi, ab ullam, in magni similique dignissimos, tenetur vitae sit molestias et laborum at.",
-};
-
-const categoriesLinks = testBook.categories?.map((category) => (
-  <CategoryLink link={category}>{category}</CategoryLink>
-));
+import { useEffect, useState } from "react";
+import { getBook } from "../../services/BooksAPI";
+import { useSearchParams } from "react-router-dom";
 
 export const BookPage = () => {
+  const [book, setBook] = useState<Book>({} as Book);
+  const [searchParams] = useSearchParams();
+
+  const id = searchParams.get("id");
+
+  const categoriesLinks = book.categories?.map((category) => (
+    <CategoryLink link={category}>
+      {category}
+      <br />
+    </CategoryLink>
+  ));
+
+  useEffect(() => {
+    async function fetchBook() {
+      if (id) {
+        const book = await getBook(id);
+        setBook(book);
+        console.log(book);
+      }
+    }
+    fetchBook().catch(console.error);
+  }, [id]);
+
   return (
     <BookContainer>
-      <BookImage src={testBook.img?.img_big || book_placeholder} alt="Book" />
+      <BookImage
+        src={book.img?.img_big || book.img?.img_small || book_placeholder}
+        alt="Book"
+      />
       <BookInfoContainer>
         {categoriesLinks}
-        <Title>{testBook.title}</Title>
-        <Author>{testBook.authors}</Author>
-        <Description>{testBook.description}</Description>
+        <Title>{book.title}</Title>
+        <Author>{book.authors?.join(", ")}</Author>
+        {book.description && <Description>{book.description}</Description>}
       </BookInfoContainer>
     </BookContainer>
   );

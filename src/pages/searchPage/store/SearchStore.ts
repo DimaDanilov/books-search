@@ -8,7 +8,7 @@ class SearchStore {
     books: [],
     totalItems: 0,
   };
-  searchField: string = "asdasd";
+  searchField: string = "";
 
   constructor() {
     makeAutoObservable(this);

@@ -8,18 +8,13 @@ import { useSearchStore } from "../store/SearchStore";
 
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
-  const bookCards = searchStore.booksArray.books.map((book) => {
-    console.log(book);
+  const bookCards = searchStore.booksArray.books?.map((book) => {
     return <BookCard key={book.id} book={book} />;
   });
 
   useEffect(() => {
     searchStore.fetchBooks();
   }, []);
-
-  useEffect(() => {
-    console.log(searchStore.booksArray);
-  }, [searchStore.booksArray]);
 
   return (
     <Container>
