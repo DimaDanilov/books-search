@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 import { IBooksArray } from "../../../models/Book";
 import { getBooks } from "../../../services/BooksAPI";
 import { Sort } from "../../../models/Sort";
+import { Categories } from "../../../models/Categories";
 
 class SearchStore {
   booksArray: IBooksArray = {
@@ -10,7 +11,8 @@ class SearchStore {
     totalItems: 0,
   };
   searchField: string = "";
-  sortType: Sort = Sort["revelance"];
+  sortType: Sort = Sort["relevance"];
+  category: Categories = Categories["all"];
 
   constructor() {
     makeAutoObservable(this);
@@ -26,13 +28,21 @@ class SearchStore {
     this.sortType = type;
   }
 
+  setCategory(category: Categories) {
+    this.category = category;
+  }
+
   setBooks(books: IBooksArray) {
     this.booksArray = books;
   }
 
   async fetchBooks() {
     if (this.searchField) {
-      const data = await getBooks(this.searchField, this.sortType);
+      const data = await getBooks(
+        this.searchField,
+        this.sortType,
+        this.category
+      );
       this.setBooks(data);
     }
   }

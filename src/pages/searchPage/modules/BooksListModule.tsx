@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { Categories } from "../../../models/Categories";
 import { Sort } from "../../../models/Sort";
 import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
@@ -13,6 +14,7 @@ export const BooksListModule = observer(() => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search");
   const sortQuery = searchParams.get("sort");
+  const categoryQuery = searchParams.get("category");
 
   const bookCards = searchStore.booksArray.books?.map((book) => {
     return <BookCard key={book.id} book={book} />;
@@ -22,11 +24,16 @@ export const BooksListModule = observer(() => {
     if (searchQuery && searchQuery !== searchStore.searchField) {
       searchStore.setSearchField(searchQuery);
     }
-    if (sortQuery && sortQuery != Sort[searchStore.sortType]) {
+    if (sortQuery && sortQuery !== Sort[searchStore.sortType]) {
       searchStore.setSortType(Sort[sortQuery as keyof typeof Sort]);
     }
+    if (categoryQuery && categoryQuery !== Categories[searchStore.category]) {
+      searchStore.setCategory(
+        Categories[categoryQuery as keyof typeof Categories]
+      );
+    }
     searchStore.fetchBooks();
-  }, [searchQuery, sortQuery]);
+  }, [searchQuery, sortQuery, categoryQuery]);
 
   return (
     <Container>

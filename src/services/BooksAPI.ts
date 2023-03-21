@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Book, IBooksArray } from "../models/Book";
+import { Categories } from "../models/Categories";
 import { Sort } from "../models/Sort";
 import { BooksAdapter } from "./BooksAdapter";
 
@@ -21,11 +22,15 @@ export const getBook = async (id: string): Promise<Book> => {
 
 export const getBooks = async (
   searchQuery: string,
-  sortType: Sort
+  sortType: Sort,
+  category: Categories
 ): Promise<IBooksArray> => {
+  const categories = category !== 0 ? `+subject:${Categories[category]}` : "";
   return axios
     .get(
-      `${BASE_URL}/volumes?q=${searchQuery}&orderBy=${sortType}&key=${API_KEY}`,
+      `${BASE_URL}/volumes?q=${searchQuery + categories}&orderBy=${
+        Sort[sortType]
+      }&key=${API_KEY}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -34,6 +39,7 @@ export const getBooks = async (
       }
     )
     .then((response) => {
+      console.log(response.data.items);
       return {
         books: response.data.items
           ? BooksAdapter.parseBooks(response.data.items)

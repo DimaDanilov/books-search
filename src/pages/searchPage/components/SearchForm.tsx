@@ -4,8 +4,7 @@ import { useSearchStore } from "../store/SearchStore";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { SortSelect } from "./SortSelect";
-import { Label } from "../../../ui/Label";
-import { Select } from "../../../ui/Select";
+import { CategoriesSelect } from "./CategoriesSelect";
 
 const onFormSubmit = () => (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -41,16 +40,7 @@ export const SearchForm = observer(() => {
 
       <FormBlock>
         <FormBlock>
-          <Label htmlFor="categories">Categories</Label>
-          <Select name="categories" id="categories">
-            <option>all</option>
-            <option>art</option>
-            <option>biography</option>
-            <option>computers</option>
-            <option>history</option>
-            <option>medical</option>
-            <option>poetry</option>
-          </Select>
+          <CategoriesSelect />
         </FormBlock>
         <FormBlock>
           <SortSelect />
