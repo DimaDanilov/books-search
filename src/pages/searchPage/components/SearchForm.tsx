@@ -1,12 +1,35 @@
 import styled from "styled-components";
 import { globalStyles } from "../../../styles/style";
+import { useSearchStore } from "../store/SearchStore";
+import { observer } from "mobx-react-lite";
 
-export const SearchForm = () => {
+const onFormSubmit = () => (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+};
+
+export const SearchForm = observer(() => {
+  const searchStore = useSearchStore();
+
+  const onSearchFieldChange =
+    () => (e: React.ChangeEvent<HTMLInputElement>) => {
+      searchStore.setSearchField(e.target.value);
+    };
+
+  const onSearchClick = () => {
+    searchStore.fetchBooks();
+  };
+
   return (
-    <Form name="search_books" action="">
+    <Form name="search_books" action="" onSubmit={onFormSubmit()}>
       <FormBlock>
-        <TextInput type="text" name="search_input" id="search_input" />
-        <input type="submit" value="Send" />
+        <TextInput
+          type="text"
+          name="search_input"
+          id="search_input"
+          onChange={onSearchFieldChange()}
+          value={searchStore.searchField}
+        />
+        <input type="submit" value="Send" onClick={onSearchClick} />
       </FormBlock>
 
       <FormBlock>
@@ -32,7 +55,7 @@ export const SearchForm = () => {
       </FormBlock>
     </Form>
   );
-};
+});
 
 const Form = styled.form`
   display: flex;

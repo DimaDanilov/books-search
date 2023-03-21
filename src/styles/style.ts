@@ -12,5 +12,6 @@ export const globalStyles = {
     white: "#FFFFFF",
     black: "#333333",
     grey: "#C3C3C2",
+    lightgrey: "#F1F3F1",
   },
 };

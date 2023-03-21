@@ -1,8 +1,16 @@
 export type Book = {
-  id: number;
-  img?: string;
-  category: string;
+  id: string;
+  img?: {
+    img_small?: string;
+    img_big?: string;
+  };
+  categories?: Array<string>;
   title: string;
-  author: string;
+  authors: Array<string>;
   description: string;
 };
+
+export interface IBooksArray {
+  books: Book[];
+  totalItems: number;
+}

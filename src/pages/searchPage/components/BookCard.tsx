@@ -6,20 +6,24 @@ import { NavLink } from "react-router-dom";
 import { CategoryLink } from "../../../ui/CategoryLink";
 
 export const BookCard = ({ book }: { book: Book }) => {
+  const bookCategory = book.categories && book.categories[0];
   return (
     <Container to={`/book?id=${book.id}`}>
-      <BookImage src={book.img || book_placeholder} alt="Book" />
-      <CategoryLink link={book.category}>{book.category}</CategoryLink>
+      <BookImage src={book.img?.img_small || book_placeholder} alt="Book" />
+      <CategoryLink link={bookCategory}>{bookCategory}</CategoryLink>
       <BookTitle>{book.title}</BookTitle>
-      <BookAuthor>{book.author}</BookAuthor>
+      <BookAuthor>{book.authors}</BookAuthor>
     </Container>
   );
 };
 
 const Container = styled(NavLink)`
-  background-color: #f3f2f1;
+  background-color: ${globalStyles.colors.lightgrey};
+  margin: 0;
   padding: 5%;
   text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
 `;
 const BookImage = styled.img`
   width: 100%;
