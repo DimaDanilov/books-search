@@ -20,6 +20,10 @@ export const BooksListModule = observer(() => {
     return <BookCard key={book.id} book={book} />;
   });
 
+  const onLoadMoreClick = () => {
+    searchStore.fetchBooks("add");
+  };
+
   useEffect(() => {
     if (searchQuery && searchQuery !== searchStore.searchField) {
       searchStore.setSearchField(searchQuery);
@@ -32,19 +36,27 @@ export const BooksListModule = observer(() => {
         Categories[categoryQuery as keyof typeof Categories]
       );
     }
-    searchStore.fetchBooks();
+    searchStore.fetchBooks("set");
   }, [searchQuery, sortQuery, categoryQuery]);
 
   return (
-    <Container>
+    <SectionContainer>
       <BooksListStatus>
         Found {searchStore.booksArray.totalItems} results
       </BooksListStatus>
       <BooksList>{bookCards}</BooksList>
-    </Container>
+      {searchStore.morePagesToShow && (
+        <PaginationBtn onClick={onLoadMoreClick}>Load more</PaginationBtn>
+      )}
+    </SectionContainer>
   );
 });
 
+const SectionContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 0 10vh;
+`;
 const BooksListStatus = styled.h2`
   color: ${globalStyles.colors.black};
   text-align: center;
@@ -55,4 +67,10 @@ const BooksList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin: 8vh auto;
+  width: 100%;
+`;
+const PaginationBtn = styled.button`
+  width: 50%;
+  margin: 0 auto;
+  padding: 10px;
 `;

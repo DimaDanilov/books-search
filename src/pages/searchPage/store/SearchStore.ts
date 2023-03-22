@@ -13,6 +13,9 @@ class SearchStore {
   searchField: string = "";
   sortType: Sort = Sort["relevance"];
   category: Categories = Categories["all"];
+  currentstartIndex: number = 0; // First book for pagination stack
+  PAGINATION_STACK: number = 30;
+  morePagesToShow: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -21,29 +24,55 @@ class SearchStore {
   setSearchField(text: string) {
     if (text !== this.searchField) {
       this.searchField = text;
+      this.updateStartIndex(0, "set");
+      this.morePagesToShow = true;
     }
   }
 
   setSortType(type: Sort) {
     this.sortType = type;
+    this.updateStartIndex(0, "set");
+    this.morePagesToShow = true;
   }
 
   setCategory(category: Categories) {
     this.category = category;
+    this.updateStartIndex(0, "set");
+    this.morePagesToShow = true;
   }
 
-  setBooks(books: IBooksArray) {
-    this.booksArray = books;
+  updateBooks(books: IBooksArray, todo: "set" | "add") {
+    if (todo === "set") {
+      this.booksArray = books;
+    } else if (todo === "add") {
+      if (books.books.length !== 0) {
+        this.booksArray.books.push(...books.books);
+        this.booksArray.totalItems += books.totalItems;
+      } else {
+        this.morePagesToShow = false;
+      }
+    }
   }
 
-  async fetchBooks() {
+  updateStartIndex(index: number, todo: "set" | "add") {
+    if (todo === "set") {
+      this.currentstartIndex = index;
+    } else if (todo === "add") {
+      this.currentstartIndex += index;
+    }
+  }
+
+  async fetchBooks(todoBooks: "set" | "add") {
     if (this.searchField) {
       const data = await getBooks(
         this.searchField,
         this.sortType,
-        this.category
+        this.category,
+        this.currentstartIndex,
+        this.PAGINATION_STACK
       );
-      this.setBooks(data);
+      this.updateBooks(data, todoBooks);
+      this.updateStartIndex(this.PAGINATION_STACK, "add");
     }
   }
 }
