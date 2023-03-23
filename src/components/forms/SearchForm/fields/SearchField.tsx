@@ -15,9 +15,11 @@ export const SearchField = observer(() => {
   };
 
   const onClick = () => {
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    currentUrlParams.set("search", searchInputText);
-    navigate(window.location.pathname + "?" + currentUrlParams.toString());
+    if (searchInputText) {
+      const currentUrlParams = new URLSearchParams(window.location.search);
+      currentUrlParams.set("search", searchInputText);
+      navigate(window.location.pathname + "?" + currentUrlParams.toString());
+    }
   };
 
   useEffect(() => {

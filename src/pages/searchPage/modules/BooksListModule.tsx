@@ -20,7 +20,7 @@ export const BooksListModule = observer(() => {
   useEffect(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
     searchStore.setBooks();
-  }, [searchQuery]);
+  }, [searchStore, searchQuery]);
 
   useEffect(() => {
     searchStore.setPageSettings({
@@ -28,7 +28,7 @@ export const BooksListModule = observer(() => {
       value: Sort[sortQuery as keyof typeof Sort],
     });
     searchStore.setBooks();
-  }, [sortQuery]);
+  }, [searchStore, sortQuery]);
 
   useEffect(() => {
     searchStore.setPageSettings({
@@ -36,7 +36,7 @@ export const BooksListModule = observer(() => {
       value: Categories[categoryQuery as keyof typeof Categories],
     });
     searchStore.setBooks();
-  }, [categoryQuery]);
+  }, [searchStore, categoryQuery]);
 
   const bookCards = searchStore.booksArray.books?.map((book) => {
     return <BookCard key={book.id} book={book} />;

@@ -5,6 +5,7 @@ import { getBooks } from "../../../services/BooksAPI";
 import { Sort } from "../../../models/Sort";
 import { Categories } from "../../../models/Categories";
 import { PageSettings } from "../../../models/PageSettings";
+import { LoadingQueryStatus } from "../../../models/LoadingQueryStatus";
 
 class SearchStore {
   booksArray: IBooksArray = {
@@ -14,6 +15,12 @@ class SearchStore {
   searchField: string = "";
   sortType: Sort = Sort["relevance"];
   category: Categories = Categories["all"];
+  queryParamsLoadStatus: LoadingQueryStatus = {
+    search: false,
+    sortType: false,
+    category: false,
+  };
+
   currentstartIndex: number = 0; // First book for pagination stack
   PAGINATION_STACK: number = 30;
   morePagesToShow: boolean = true;
@@ -32,16 +39,21 @@ class SearchStore {
             return;
           }
         }
+        this.queryParamsLoadStatus.search = true;
         break;
       case "sort":
-        if (settings.value !== this.sortType) {
+        if (settings.value !== this.sortType && settings.value !== undefined) {
+          console.log(settings.value);
           this.sortType = settings.value;
         }
+        this.queryParamsLoadStatus.sortType = true;
         break;
       case "category":
-        if (this.category !== settings.value) {
+        if (this.category !== settings.value && settings.value !== undefined) {
+          console.log(settings.value);
           this.category = settings.value;
         }
+        this.queryParamsLoadStatus.category = true;
         break;
     }
     this.updateStartIndex(0, "set");
@@ -75,7 +87,10 @@ class SearchStore {
   }
 
   async setBooks() {
-    if (this.searchField) {
+    if (
+      this.searchField &&
+      Object.values(this.queryParamsLoadStatus).every(Boolean) // All query params loaded
+    ) {
       this.updateStartIndex(0, "set");
       const data = await getBooks(
         this.searchField,
