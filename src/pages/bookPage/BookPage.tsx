@@ -99,10 +99,11 @@ const Author = styled.h3`
   font-size: ${globalStyles.fonts.h3};
   grid-area: author;
 `;
-const Description = styled.h3`
+const Description = styled.p`
   margin: 3vh auto;
   padding: 20px;
-  font-size: ${globalStyles.fonts.h3};
+  font-size: ${globalStyles.fonts.p};
+  font-weight: 500;
   color: ${globalStyles.colors.black};
   border: 1.5px solid ${globalStyles.colors.grey};
   border-radius: 15px;
