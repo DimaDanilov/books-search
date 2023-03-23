@@ -5,7 +5,7 @@ import { Sort } from "../models/Sort";
 import { BooksAdapter } from "./BooksAdapter";
 
 const BASE_URL = "https://www.googleapis.com/books/v1";
-const API_KEY = "AIzaSyCNlACc5wWRR56aJSE_zMfY5pukFUKamJM";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const getBook = async (id: string): Promise<Book> => {
   return axios
