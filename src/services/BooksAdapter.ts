@@ -16,6 +16,12 @@ export class BooksAdapter {
     };
   }
   static parseBooks(books: any): Book[] {
-    return books.map((item: any) => this.parseBook(item));
+    const mappedBooks = books.map((item: any) => this.parseBook(item));
+
+    // Delete duplicates books by ID
+    return mappedBooks.filter(
+      (value: { id: any }, index: any, self: { id: any }[]) =>
+        index === self.findIndex((t: { id: any }) => t.id === value.id)
+    );
   }
 }

@@ -30,7 +30,9 @@ export const getBooks = async (
   const categories = category !== 0 ? `+subject:${Categories[category]}` : "";
   return axios
     .get(
-      `${BASE_URL}/volumes?q=${searchQuery + categories}&orderBy=${
+      `${BASE_URL}/volumes?q=${
+        searchQuery.replace(" ", "+") + categories
+      }&orderBy=${
         Sort[sortType]
       }&startIndex=${startIndex}&maxResults=${stackSize}&key=${API_KEY}`,
       {

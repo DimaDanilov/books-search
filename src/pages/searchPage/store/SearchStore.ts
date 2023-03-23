@@ -1,6 +1,6 @@
 import React from "react";
 import { makeAutoObservable } from "mobx";
-import { IBooksArray } from "../../../models/Book";
+import { Book, IBooksArray } from "../../../models/Book";
 import { getBooks } from "../../../services/BooksAPI";
 import { Sort } from "../../../models/Sort";
 import { Categories } from "../../../models/Categories";
@@ -47,8 +47,13 @@ class SearchStore {
       this.booksArray = books;
     } else if (todo === "add") {
       if (books.books.length !== 0) {
-        this.booksArray.books.push(...books.books);
-        this.booksArray.totalItems += books.totalItems;
+        // Add only new books
+        books.books.forEach((book) => {
+          this.booksArray.books.findIndex(
+            (addedBook: Book) => addedBook.id === book.id
+          ) === -1 && this.booksArray.books.push(book);
+        });
+        this.booksArray.totalItems = books.totalItems;
       } else {
         this.morePagesToShow = false;
       }

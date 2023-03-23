@@ -14,8 +14,8 @@ export const BookPage = () => {
 
   const id = searchParams.get("id");
 
-  const categoriesLinks = book.categories?.map((category) => (
-    <CategoryLink link={category}>
+  const categoriesLinks = book.categories?.map((category, index) => (
+    <CategoryLink link={category} key={index}>
       {category}
       <br />
     </CategoryLink>
