@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
-import { Sort } from "../../../models/Sort";
-import { Label } from "../../../ui/Label";
-import { Select } from "../../../ui/Select";
-import { useSearchStore } from "../store/SearchStore";
+import { Sort } from "../../../../models/Sort";
+import { Label } from "../../../../ui/Label";
+import { Select } from "../../../../ui/Select";
+import { useSearchStore } from "../../../../pages/searchPage/store/SearchStore";
 
 export const SortSelect = observer(() => {
   const searchStore = useSearchStore();

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import search_background from "../../../assets/images/search_background.jpg";
 import { globalStyles } from "../../../styles/style";
-import { SearchForm } from "../components/SearchForm";
+import { SearchForm } from "../../../components/forms/SearchForm/SearchForm";
 
 export const SearchModule = () => {
   return (

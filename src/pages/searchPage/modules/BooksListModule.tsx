@@ -6,7 +6,7 @@ import { Categories } from "../../../models/Categories";
 import { Sort } from "../../../models/Sort";
 import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
-import { BookCard } from "../components/BookCard";
+import { BookCard } from "../../../components/cards/BookCard";
 import { useSearchStore } from "../store/SearchStore";
 
 export const BooksListModule = observer(() => {

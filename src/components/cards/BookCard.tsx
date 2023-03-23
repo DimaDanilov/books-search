@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { globalStyles } from "../../../styles/style";
-import book_placeholder from "../../../assets/icons/book_placeholder.svg";
-import { Book } from "../../../models/Book";
+import { globalStyles } from "../../styles/style";
+import book_placeholder from "../../assets/icons/book_placeholder.svg";
+import { Book } from "../../models/Book";
 import { NavLink } from "react-router-dom";
-import { CategoryLink } from "../../../ui/CategoryLink";
+import { CategoryLink } from "../../ui/CategoryLink";
 
 export const BookCard = ({ book }: { book: Book }) => {
   const bookCategory = book.categories && book.categories[0];

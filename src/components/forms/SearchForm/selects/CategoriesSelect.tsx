@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
-import { Categories } from "../../../models/Categories";
-import { Label } from "../../../ui/Label";
-import { Select } from "../../../ui/Select";
-import { useSearchStore } from "../store/SearchStore";
+import { Categories } from "../../../../models/Categories";
+import { Label } from "../../../../ui/Label";
+import { Select } from "../../../../ui/Select";
+import { useSearchStore } from "../../../../pages/searchPage/store/SearchStore";
 
 export const CategoriesSelect = observer(() => {
   const searchStore = useSearchStore();
