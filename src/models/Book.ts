@@ -2,7 +2,6 @@ export type Book = {
   id: string;
   img?: {
     img_small?: string;
-    img_middle?: string;
     img_large?: string;
   };
   categories?: Array<string>;

@@ -6,8 +6,7 @@ export class BooksAdapter {
       id: item.id,
       img: {
         img_small: item.volumeInfo.imageLinks?.smallThumbnail,
-        img_middle: item.volumeInfo.imageLinks?.thumbnail,
-        img_large: item.volumeInfo.imageLinks?.large,
+        img_large: item.volumeInfo.imageLinks?.thumbnail,
       },
       categories: item.volumeInfo.categories,
       title: item.volumeInfo.title,

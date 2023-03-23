@@ -34,12 +34,7 @@ export const BookPage = () => {
   return (
     <BookContainer>
       <BookImage
-        src={
-          book.img?.img_large ||
-          book.img?.img_middle ||
-          book.img?.img_small ||
-          book_placeholder
-        }
+        src={book.img?.img_large || book.img?.img_small || book_placeholder}
         alt="Book"
       />
       <BookInfoContainer>

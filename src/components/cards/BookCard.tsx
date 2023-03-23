@@ -10,7 +10,7 @@ export const BookCard = ({ book }: { book: Book }) => {
   return (
     <Container to={`/book?id=${book.id}`}>
       <BookImage
-        src={book.img?.img_middle || book.img?.img_small || book_placeholder}
+        src={book.img?.img_large || book.img?.img_small || book_placeholder}
         alt="Book"
       />
       <Category>{bookCategory}</Category>

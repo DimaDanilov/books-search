@@ -76,6 +76,10 @@ class SearchStore {
     }
   }
 
+  updateNextBooks(books: IBooksArray) {
+    this.nextBooksArray = books;
+  }
+
   updateStartIndex(index: number, todo: "set" | "add") {
     if (todo === "set") {
       this.currentstartIndex = index;
@@ -107,7 +111,7 @@ class SearchStore {
           this.currentstartIndex,
           this.PAGINATION_STACK
         );
-        this.nextBooksArray = nextBookData;
+        this.updateNextBooks(nextBookData);
       }
     }
   }
@@ -123,7 +127,7 @@ class SearchStore {
         this.currentstartIndex,
         this.PAGINATION_STACK
       );
-      this.nextBooksArray = data;
+      this.updateNextBooks(data);
     }
   }
 }
