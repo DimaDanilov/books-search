@@ -4,7 +4,7 @@ import { Sort } from "./Sort";
 export type PageSettings =
   | {
       type: "search";
-      value: string;
+      value: string | null;
     }
   | {
       type: "sort";

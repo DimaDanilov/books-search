@@ -25,17 +25,23 @@ class SearchStore {
   setPageSettings(settings: PageSettings) {
     switch (settings.type) {
       case "search":
-        if (settings.value !== this.searchField) {
-          this.searchField = settings.value;
-        } else {
-          return;
+        if (settings.value && settings.value !== this.searchField) {
+          if (settings.value !== this.searchField) {
+            this.searchField = settings.value;
+          } else {
+            return;
+          }
         }
         break;
       case "sort":
-        this.sortType = settings.value;
+        if (settings.value !== this.sortType) {
+          this.sortType = settings.value;
+        }
         break;
       case "category":
-        this.category = settings.value;
+        if (this.category !== settings.value) {
+          this.category = settings.value;
+        }
         break;
     }
     this.updateStartIndex(0, "set");

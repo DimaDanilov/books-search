@@ -11,10 +11,32 @@ import { useSearchStore } from "../store/SearchStore";
 
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
+
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search");
   const sortQuery = searchParams.get("sort");
   const categoryQuery = searchParams.get("category");
+
+  useEffect(() => {
+    searchStore.setPageSettings({ type: "search", value: searchQuery });
+    searchStore.setBooks();
+  }, [searchQuery]);
+
+  useEffect(() => {
+    searchStore.setPageSettings({
+      type: "sort",
+      value: Sort[sortQuery as keyof typeof Sort],
+    });
+    searchStore.setBooks();
+  }, [sortQuery]);
+
+  useEffect(() => {
+    searchStore.setPageSettings({
+      type: "category",
+      value: Categories[categoryQuery as keyof typeof Categories],
+    });
+    searchStore.setBooks();
+  }, [categoryQuery]);
 
   const bookCards = searchStore.booksArray.books?.map((book) => {
     return <BookCard key={book.id} book={book} />;
@@ -23,25 +45,6 @@ export const BooksListModule = observer(() => {
   const onLoadMoreClick = () => {
     searchStore.addBooks();
   };
-
-  useEffect(() => {
-    if (searchQuery && searchQuery !== searchStore.searchField) {
-      searchStore.setPageSettings({ type: "search", value: searchQuery });
-    }
-    if (sortQuery && sortQuery !== Sort[searchStore.sortType]) {
-      searchStore.setPageSettings({
-        type: "sort",
-        value: Sort[sortQuery as keyof typeof Sort],
-      });
-    }
-    if (categoryQuery && categoryQuery !== Categories[searchStore.category]) {
-      searchStore.setPageSettings({
-        type: "category",
-        value: Categories[categoryQuery as keyof typeof Categories],
-      });
-    }
-    searchStore.setBooks();
-  }, [searchQuery, sortQuery, categoryQuery]);
 
   return (
     <SectionContainer>
