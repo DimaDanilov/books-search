@@ -3,7 +3,7 @@ import { globalStyles } from "../../styles/style";
 import book_placeholder from "../../assets/icons/book_placeholder.svg";
 import { Book } from "../../models/Book";
 import { NavLink } from "react-router-dom";
-import { CategoryLink } from "../../ui/CategoryLink";
+import { Category } from "../../ui/Category";
 
 export const BookCard = ({ book }: { book: Book }) => {
   const bookCategory = book.categories && book.categories[0];
@@ -13,7 +13,7 @@ export const BookCard = ({ book }: { book: Book }) => {
         src={book.img?.img_middle || book.img?.img_small || book_placeholder}
         alt="Book"
       />
-      <CategoryLink link={bookCategory}>{bookCategory}</CategoryLink>
+      <Category>{bookCategory}</Category>
       <BookTitle>{book.title}</BookTitle>
       <BookAuthor>{book.authors?.join(", ")}</BookAuthor>
     </Container>

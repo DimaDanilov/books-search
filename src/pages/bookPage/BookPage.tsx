@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Book } from "../../models/Book";
 import book_placeholder from "../../assets/icons/book_placeholder.svg";
 import { Container } from "../../ui/Container";
-import { CategoryLink } from "../../ui/CategoryLink";
 import { globalStyles } from "../../styles/style";
 import { useEffect, useState } from "react";
 import { getBook } from "../../services/BooksAPI";
 import { useSearchParams } from "react-router-dom";
+import { Category } from "../../ui/Category";
 
 export const BookPage = () => {
   const [book, setBook] = useState<Book>({} as Book);
@@ -14,11 +14,11 @@ export const BookPage = () => {
 
   const id = searchParams.get("id");
 
-  const categoriesLinks = book.categories?.map((category, index) => (
-    <CategoryLink link={category} key={index}>
+  const categoriesList = book.categories?.map((category, index) => (
+    <Category key={index}>
       {category}
       <br />
-    </CategoryLink>
+    </Category>
   ));
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const BookPage = () => {
         alt="Book"
       />
       <BookInfoContainer>
-        {categoriesLinks}
+        {categoriesList}
         <Title>{book.title}</Title>
         <Author>{book.authors?.join(", ")}</Author>
         {book.description && <Description>{book.description}</Description>}

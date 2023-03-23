@@ -6,7 +6,7 @@ export const globalStyles = {
     h1: "30px",
     h3: "22px",
     h4: "18px",
-    a: "18px",
+    p: "18px",
   },
   colors: {
     white: "#FFFFFF",
