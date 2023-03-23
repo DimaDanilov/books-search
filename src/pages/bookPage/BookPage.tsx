@@ -37,36 +37,67 @@ export const BookPage = () => {
         src={book.img?.img_large || book.img?.img_small || book_placeholder}
         alt="Book"
       />
-      <BookInfoContainer>
-        {categoriesList}
-        <Title>{book.title}</Title>
-        <Author>{book.authors?.join(", ")}</Author>
-        {book.description && <Description>{book.description}</Description>}
-      </BookInfoContainer>
+      <CategoriesContainer>{categoriesList}</CategoriesContainer>
+      <Title>{book.title}</Title>
+      <Author>{book.authors?.join(", ")}</Author>
+      {book.description && <Description>{book.description}</Description>}
     </BookContainer>
   );
 };
 
 const BookContainer = styled(Container)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: grid;
+  gap: 1%;
+  padding: 4vh 0;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "image"
+    "categories"
+    "title"
+    "author"
+    "description";
+  @media (min-width: 500px) {
+    gap: 1% 5%;
+    grid-template-columns: 3fr 2fr;
+    grid-template-areas:
+      "image categories"
+      "image title"
+      "image author"
+      "image ."
+      "description description";
+  }
+  @media (min-width: 690px) {
+    grid-template-columns: 1fr 2fr;
+  }
+  @media (min-width: 1000px) {
+    grid-template-areas:
+      "image categories"
+      "image title"
+      "image author"
+      "image description"
+      "image .";
+  }
 `;
 const BookImage = styled.img`
-  width: 30%;
-  align-self: flex-start;
+  width: 100%;
+  grid-area: image;
 `;
-const BookInfoContainer = styled.div`
-  width: 60%;
-  padding: 3vh 0;
+const CategoriesContainer = styled.div`
+  width: 100%;
+  margin: 1vh 0;
+  grid-area: categories;
 `;
 const Title = styled.h1`
+  width: 100%;
   color: ${globalStyles.colors.black};
   font-size: ${globalStyles.fonts.h1};
+  grid-area: title;
 `;
 const Author = styled.h3`
+  width: 100%;
   color: ${globalStyles.colors.grey};
   font-size: ${globalStyles.fonts.h3};
+  grid-area: author;
 `;
 const Description = styled.h3`
   margin: 3vh auto;
@@ -75,4 +106,5 @@ const Description = styled.h3`
   color: ${globalStyles.colors.black};
   border: 1.5px solid ${globalStyles.colors.grey};
   border-radius: 15px;
+  grid-area: description;
 `;

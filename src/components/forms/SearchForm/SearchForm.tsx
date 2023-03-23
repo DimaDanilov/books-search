@@ -14,14 +14,14 @@ export const SearchForm = () => {
         <SearchField />
       </FormBlock>
 
-      <FormBlock>
-        <FormBlock>
+      <SelectsContainer>
+        <SelectContainer>
           <CategoriesSelect />
-        </FormBlock>
-        <FormBlock>
+        </SelectContainer>
+        <SelectContainer>
           <SortSelect />
-        </FormBlock>
-      </FormBlock>
+        </SelectContainer>
+      </SelectsContainer>
     </Form>
   );
 };
@@ -34,7 +34,18 @@ const Form = styled.form`
 `;
 const FormBlock = styled.div`
   display: flex;
+  flex-direction: row;
   gap: 10px;
   width: 50%;
   margin: 5px 10px;
+`;
+const SelectsContainer = styled(FormBlock)`
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+`;
+const SelectContainer = styled(FormBlock)`
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;

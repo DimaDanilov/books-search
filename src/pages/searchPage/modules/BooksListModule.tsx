@@ -75,13 +75,25 @@ const BooksListStatus = styled.h2`
 `;
 const BooksList = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   gap: 30px;
   margin: 8vh auto;
   width: 100%;
+  @media (min-width: 450px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  @media (min-width: 720px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (min-width: 950px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
 `;
 const PaginationBtn = styled.button`
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   padding: 10px;
 `;
