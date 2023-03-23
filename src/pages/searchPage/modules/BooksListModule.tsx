@@ -52,7 +52,7 @@ export const BooksListModule = observer(() => {
         Found {searchStore.booksArray.totalItems} results
       </BooksListStatus>
       <BooksList>{bookCards}</BooksList>
-      {searchStore.morePagesToShow && (
+      {searchStore.nextBooksArray.books.length > 0 && (
         <PaginationBtn onClick={onLoadMoreClick}>Load more</PaginationBtn>
       )}
     </SectionContainer>
