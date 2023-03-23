@@ -15,7 +15,7 @@ export const BookCard = ({ book }: { book: Book }) => {
       />
       <CategoryLink link={bookCategory}>{bookCategory}</CategoryLink>
       <BookTitle>{book.title}</BookTitle>
-      <BookAuthor>{book.authors}</BookAuthor>
+      <BookAuthor>{book.authors?.join(", ")}</BookAuthor>
     </Container>
   );
 };

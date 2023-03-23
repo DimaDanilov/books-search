@@ -4,6 +4,7 @@ import { IBooksArray } from "../../../models/Book";
 import { getBooks } from "../../../services/BooksAPI";
 import { Sort } from "../../../models/Sort";
 import { Categories } from "../../../models/Categories";
+import { PageSettings } from "../../../models/PageSettings";
 
 class SearchStore {
   booksArray: IBooksArray = {
@@ -21,22 +22,22 @@ class SearchStore {
     makeAutoObservable(this);
   }
 
-  setSearchField(text: string) {
-    if (text !== this.searchField) {
-      this.searchField = text;
-      this.updateStartIndex(0, "set");
-      this.morePagesToShow = true;
+  setPageSettings(settings: PageSettings) {
+    switch (settings.type) {
+      case "search":
+        if (settings.value !== this.searchField) {
+          this.searchField = settings.value;
+        } else {
+          return;
+        }
+        break;
+      case "sort":
+        this.sortType = settings.value;
+        break;
+      case "category":
+        this.category = settings.value;
+        break;
     }
-  }
-
-  setSortType(type: Sort) {
-    this.sortType = type;
-    this.updateStartIndex(0, "set");
-    this.morePagesToShow = true;
-  }
-
-  setCategory(category: Categories) {
-    this.category = category;
     this.updateStartIndex(0, "set");
     this.morePagesToShow = true;
   }
@@ -62,7 +63,22 @@ class SearchStore {
     }
   }
 
-  async fetchBooks(todoBooks: "set" | "add") {
+  async setBooks() {
+    if (this.searchField) {
+      this.updateStartIndex(0, "set");
+      const data = await getBooks(
+        this.searchField,
+        this.sortType,
+        this.category,
+        this.currentstartIndex,
+        this.PAGINATION_STACK
+      );
+      this.updateBooks(data, "set");
+      this.updateStartIndex(this.PAGINATION_STACK, "add");
+    }
+  }
+
+  async addBooks() {
     if (this.searchField) {
       const data = await getBooks(
         this.searchField,
@@ -71,7 +87,7 @@ class SearchStore {
         this.currentstartIndex,
         this.PAGINATION_STACK
       );
-      this.updateBooks(data, todoBooks);
+      this.updateBooks(data, "add");
       this.updateStartIndex(this.PAGINATION_STACK, "add");
     }
   }

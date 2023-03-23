@@ -21,22 +21,26 @@ export const BooksListModule = observer(() => {
   });
 
   const onLoadMoreClick = () => {
-    searchStore.fetchBooks("add");
+    searchStore.addBooks();
   };
 
   useEffect(() => {
     if (searchQuery && searchQuery !== searchStore.searchField) {
-      searchStore.setSearchField(searchQuery);
+      searchStore.setPageSettings({ type: "search", value: searchQuery });
     }
     if (sortQuery && sortQuery !== Sort[searchStore.sortType]) {
-      searchStore.setSortType(Sort[sortQuery as keyof typeof Sort]);
+      searchStore.setPageSettings({
+        type: "sort",
+        value: Sort[sortQuery as keyof typeof Sort],
+      });
     }
     if (categoryQuery && categoryQuery !== Categories[searchStore.category]) {
-      searchStore.setCategory(
-        Categories[categoryQuery as keyof typeof Categories]
-      );
+      searchStore.setPageSettings({
+        type: "category",
+        value: Categories[categoryQuery as keyof typeof Categories],
+      });
     }
-    searchStore.fetchBooks("set");
+    searchStore.setBooks();
   }, [searchQuery, sortQuery, categoryQuery]);
 
   return (
