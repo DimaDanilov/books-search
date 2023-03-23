@@ -9,7 +9,10 @@ export const BookCard = ({ book }: { book: Book }) => {
   const bookCategory = book.categories && book.categories[0];
   return (
     <Container to={`/book?id=${book.id}`}>
-      <BookImage src={book.img?.img_small || book_placeholder} alt="Book" />
+      <BookImage
+        src={book.img?.img_middle || book.img?.img_small || book_placeholder}
+        alt="Book"
+      />
       <CategoryLink link={bookCategory}>{bookCategory}</CategoryLink>
       <BookTitle>{book.title}</BookTitle>
       <BookAuthor>{book.authors}</BookAuthor>

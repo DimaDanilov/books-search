@@ -26,7 +26,6 @@ export const BookPage = () => {
       if (id) {
         const book = await getBook(id);
         setBook(book);
-        console.log(book);
       }
     }
     fetchBook().catch(console.error);
@@ -35,7 +34,12 @@ export const BookPage = () => {
   return (
     <BookContainer>
       <BookImage
-        src={book.img?.img_big || book.img?.img_small || book_placeholder}
+        src={
+          book.img?.img_large ||
+          book.img?.img_middle ||
+          book.img?.img_small ||
+          book_placeholder
+        }
         alt="Book"
       />
       <BookInfoContainer>
