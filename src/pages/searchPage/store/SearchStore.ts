@@ -46,14 +46,12 @@ class SearchStore {
         break;
       case "sort":
         if (settings.value !== this.sortType && settings.value !== undefined) {
-          console.log(settings.value);
           this.sortType = settings.value;
         }
         this.queryParamsLoadStatus.sortType = true;
         break;
       case "category":
         if (this.category !== settings.value && settings.value !== undefined) {
-          console.log(settings.value);
           this.category = settings.value;
         }
         this.queryParamsLoadStatus.category = true;
@@ -101,14 +99,16 @@ class SearchStore {
       );
       this.updateBooks(data, "set");
       this.updateStartIndex(this.PAGINATION_STACK, "add");
-      const nextBookData = await getBooks(
-        this.searchField,
-        this.sortType,
-        this.category,
-        this.currentstartIndex,
-        this.PAGINATION_STACK
-      );
-      this.nextBooksArray = nextBookData;
+      if (this.booksArray.books.length !== 0) {
+        const nextBookData = await getBooks(
+          this.searchField,
+          this.sortType,
+          this.category,
+          this.currentstartIndex,
+          this.PAGINATION_STACK
+        );
+        this.nextBooksArray = nextBookData;
+      }
     }
   }
 
