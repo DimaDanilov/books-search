@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Categories } from "../../../models/Categories";
@@ -38,9 +38,13 @@ export const BooksListModule = observer(() => {
     searchStore.setBooks();
   }, [searchStore, categoryQuery]);
 
-  const bookCards = searchStore.booksArray.books?.map((book) => {
-    return <BookCard key={book.id} book={book} />;
-  });
+  const bookCards = React.useMemo(
+    () =>
+      searchStore.booksArray.books?.map((book) => {
+        return <BookCard key={book.id} book={book} />;
+      }),
+    [searchStore.booksArray.books.length]
+  );
 
   const onLoadMoreClick = () => {
     searchStore.addBooks();
