@@ -18,7 +18,7 @@ export const BookCard = observer(({ book }: { book: Book }) => {
   const bookCategory = book.categories && book.categories[0];
   return (
     <CardLink
-      isLoading={searchStore.isBooksArrayLoading}
+      cursor={searchStore.isBooksArrayLoading ? "wait" : "pointer"}
       to={`/book?id=${book.id}`}
       onClick={onClick}
     >
@@ -33,14 +33,14 @@ export const BookCard = observer(({ book }: { book: Book }) => {
   );
 });
 
-const CardLink = styled(NavLink)<{ isLoading: boolean }>`
+const CardLink = styled(NavLink)<{ cursor: "wait" | "pointer" }>`
   background-color: ${globalStyles.colors.lightgrey};
   margin: 0;
   padding: 5%;
   text-decoration: none;
   width: 100%;
   box-sizing: border-box;
-  cursor: ${(props) => (props.isLoading ? "wait" : "pointer")};
+  cursor: ${(props) => props.cursor};
 `;
 const BookImage = styled.img`
   width: 100%;

@@ -7,7 +7,7 @@ type LoaderType = {
 
 export const Loader = ({ width, ...props }: LoaderType) => {
   return (
-    <LdsGrid width={width} {...props}>
+    <LdsGrid width={width || "80px"} {...props}>
       <div></div>
       <div></div>
       <div></div>
@@ -30,10 +30,10 @@ const loaderAnimation = keyframes`
     }
 `;
 
-const LdsGrid = styled.div<{ width?: string; [x: string]: any }>`
+const LdsGrid = styled.div<{ width: string }>`
   display: inline-block;
-  width: ${(props) => props.width || "80px"};
-  height: ${(props) => props.width || "80px"};
+  width: ${(props) => props.width};
+  height: ${(props) => props.width};
   position: fixed;
   top: 50%;
   left: 50%;
