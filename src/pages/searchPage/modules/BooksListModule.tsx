@@ -1,9 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { Categories } from "../../../models/Categories";
-import { Sort } from "../../../models/Sort";
 import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
 import { BookCard } from "../../../components/cards/BookCard";
@@ -38,11 +35,6 @@ const BookList = ({
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
 
-  const [searchParams] = useSearchParams();
-  const searchQuery = searchParams.get("search");
-  const sortQuery = searchParams.get("sort");
-  const categoryQuery = searchParams.get("category");
-
   const [moreToLoad, setMoreToLoad] = useState<boolean>(false);
   const [booksToShow, setBooksToShow] = useState<IBooksArray>({
     books: [],
@@ -54,33 +46,12 @@ export const BooksListModule = observer(() => {
   }, [searchStore]);
 
   useEffect(() => {
-    searchStore.setPageSettings({ type: "search", value: searchQuery });
-    searchStore.loadBooks("set");
-  }, [searchStore, searchQuery]);
-
-  useEffect(() => {
     setBooksToShow(searchStore.booksArray);
   }, [searchStore.booksArray]);
 
   useEffect(() => {
     setMoreToLoad(searchStore.nextBooksArray.books.length > 0);
   }, [searchStore.nextBooksArray.books.length]);
-
-  useEffect(() => {
-    searchStore.setPageSettings({
-      type: "sort",
-      value: Sort[sortQuery as keyof typeof Sort],
-    });
-    searchStore.loadBooks("set");
-  }, [searchStore, sortQuery]);
-
-  useEffect(() => {
-    searchStore.setPageSettings({
-      type: "category",
-      value: Categories[categoryQuery as keyof typeof Categories],
-    });
-    searchStore.loadBooks("set");
-  }, [searchStore, categoryQuery]);
 
   const onLoadMoreClick = () => {
     searchStore.loadBooks("add");

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { globalStyles } from "../../../../styles/style";
 import { observer } from "mobx-react-lite";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSearchStore } from "../../../../pages/searchPage/store/SearchStore";
 
@@ -9,8 +9,6 @@ export const SearchField = observer(() => {
   const searchStore = useSearchStore();
 
   let navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const searchQuery = searchParams.get("search");
   const [searchInputText, setSearchInputText] = useState<string>("");
 
   const onChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +24,10 @@ export const SearchField = observer(() => {
   };
 
   useEffect(() => {
-    if (searchQuery) {
-      setSearchInputText(searchQuery);
+    if (searchStore.searchField) {
+      setSearchInputText(searchStore.searchField);
     }
-  }, [searchQuery]);
+  }, [searchStore.searchField]);
 
   return (
     <>

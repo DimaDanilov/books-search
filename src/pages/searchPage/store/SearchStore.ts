@@ -33,7 +33,7 @@ class SearchStore {
     makeAutoObservable(this);
   }
 
-  setPageSettings(settings: PageSettings) {
+  setPageQueryParams(settings: PageSettings) {
     switch (settings.type) {
       case "search":
         if (settings.value && settings.value !== this.searchField) {
@@ -107,7 +107,6 @@ class SearchStore {
       Object.values(this.queryParamsLoadStatus).every(Boolean) // All query params loaded
     ) {
       this.updateStartIndex(0, "set");
-      console.log("FIRST");
       const data = await getBooks(
         this.searchField,
         this.sortType,
@@ -117,7 +116,6 @@ class SearchStore {
       );
       this.updateBooks(data, "set");
       this.updateStartIndex(this.PAGINATION_STACK, "add");
-      console.log("Second");
       if (this.booksArray.books.length !== 0) {
         const nextBookData = await getBooks(
           this.searchField,

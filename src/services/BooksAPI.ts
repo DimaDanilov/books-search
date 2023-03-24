@@ -28,13 +28,6 @@ export const getBooks = async (
   stackSize: number
 ): Promise<IBooksArray> => {
   const categories = category !== 0 ? `+subject:${Categories[category]}` : "";
-  console.log(
-    `${BASE_URL}/volumes?q=${
-      searchQuery.replace(" ", "+") + categories
-    }&orderBy=${
-      Sort[sortType]
-    }&startIndex=${startIndex}&maxResults=${stackSize}&key=${API_KEY}`
-  );
   return axios
     .get(
       `${BASE_URL}/volumes?q=${
