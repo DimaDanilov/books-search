@@ -39,8 +39,6 @@ class SearchStore {
         if (settings.value && settings.value !== this.searchField) {
           if (settings.value !== this.searchField) {
             this.searchField = settings.value;
-          } else {
-            return;
           }
         }
         this.queryParamsLoadStatus.search = true;
@@ -109,6 +107,7 @@ class SearchStore {
       Object.values(this.queryParamsLoadStatus).every(Boolean) // All query params loaded
     ) {
       this.updateStartIndex(0, "set");
+      console.log("FIRST");
       const data = await getBooks(
         this.searchField,
         this.sortType,
@@ -118,6 +117,7 @@ class SearchStore {
       );
       this.updateBooks(data, "set");
       this.updateStartIndex(this.PAGINATION_STACK, "add");
+      console.log("Second");
       if (this.booksArray.books.length !== 0) {
         const nextBookData = await getBooks(
           this.searchField,
@@ -127,7 +127,11 @@ class SearchStore {
           this.PAGINATION_STACK
         );
         this.updateNextBooks(nextBookData);
-      }
+      } else
+        this.updateNextBooks({
+          books: [],
+          totalItems: 0,
+        });
     }
   }
 

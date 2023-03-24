@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Categories } from "../../../models/Categories";
@@ -43,6 +43,12 @@ export const BooksListModule = observer(() => {
   const sortQuery = searchParams.get("sort");
   const categoryQuery = searchParams.get("category");
 
+  const [moreToLoad, setMoreToLoad] = useState<boolean>(false);
+  const [booksToShow, setBooksToShow] = useState<IBooksArray>({
+    books: [],
+    totalItems: 0,
+  });
+
   useEffect(() => {
     searchStore.reset(); // Reset loading params if go back to previous page
   }, [searchStore]);
@@ -51,6 +57,14 @@ export const BooksListModule = observer(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
     searchStore.loadBooks("set");
   }, [searchStore, searchQuery]);
+
+  useEffect(() => {
+    setBooksToShow(searchStore.booksArray);
+  }, [searchStore.booksArray]);
+
+  useEffect(() => {
+    setMoreToLoad(searchStore.nextBooksArray.books.length > 0);
+  }, [searchStore.nextBooksArray.books.length]);
 
   useEffect(() => {
     searchStore.setPageSettings({
@@ -74,11 +88,12 @@ export const BooksListModule = observer(() => {
 
   const BookListWithLoader = withLoader(() =>
     BookList({
-      booksArray: searchStore.booksArray,
-      moreToLoad: searchStore.nextBooksArray.books.length > 0,
+      booksArray: booksToShow,
+      moreToLoad: moreToLoad,
       onClick: onLoadMoreClick,
     })
   );
+
   return (
     <BookListWithLoader
       isLoading={searchStore.isBooksArrayLoading}
