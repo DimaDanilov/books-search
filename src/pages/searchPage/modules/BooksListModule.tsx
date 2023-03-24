@@ -19,6 +19,10 @@ export const BooksListModule = observer(() => {
   const categoryQuery = searchParams.get("category");
 
   useEffect(() => {
+    searchStore.reset(); // Reset loading params if go back to previous page
+  }, []);
+
+  useEffect(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
     searchStore.loadBooks("set");
   }, [searchStore, searchQuery]);

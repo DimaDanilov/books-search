@@ -145,6 +145,15 @@ class SearchStore {
       this.updateNextBooks(data);
     }
   }
+
+  reset() {
+    this.queryParamsLoadStatus = {
+      search: false,
+      sortType: false,
+      category: false,
+    };
+    this.isBooksArrayLoading = false;
+  }
 }
 
 export const SearchStoreInstance = new SearchStore();
