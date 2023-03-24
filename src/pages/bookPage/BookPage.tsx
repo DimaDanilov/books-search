@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import { getBook } from "../../services/BooksAPI";
 import { useSearchParams } from "react-router-dom";
 import { Category } from "../../ui/Category";
+import { Loader } from "../../components/common/Loader";
 
 export const BookPage = () => {
   const [book, setBook] = useState<Book>({} as Book);
-  const [searchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
 
   const categoriesList = book.categories?.map((category, index) => (
@@ -24,24 +26,29 @@ export const BookPage = () => {
   useEffect(() => {
     async function fetchBook() {
       if (id) {
+        setIsLoading(true);
         const book = await getBook(id);
         setBook(book);
+        setIsLoading(false);
       }
     }
     fetchBook().catch(console.error);
   }, [id]);
 
   return (
-    <BookContainer>
-      <BookImage
-        src={book.img?.img_large || book.img?.img_small || book_placeholder}
-        alt="Book"
-      />
-      <CategoriesContainer>{categoriesList}</CategoriesContainer>
-      <Title>{book.title}</Title>
-      <Author>{book.authors?.join(", ")}</Author>
-      {book.description && <Description>{book.description}</Description>}
-    </BookContainer>
+    <>
+      {isLoading && <Loader width="30vw" border="10px solid red" />}
+      <BookContainer>
+        <BookImage
+          src={book.img?.img_large || book.img?.img_small || book_placeholder}
+          alt="Book"
+        />
+        <CategoriesContainer>{categoriesList}</CategoriesContainer>
+        <Title>{book.title}</Title>
+        <Author>{book.authors?.join(", ")}</Author>
+        {book.description && <Description>{book.description}</Description>}
+      </BookContainer>
+    </>
   );
 };
 

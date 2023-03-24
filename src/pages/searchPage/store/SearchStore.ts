@@ -24,7 +24,6 @@ class SearchStore {
     sortType: false,
     category: false,
   };
-
   currentstartIndex: number = 0; // First book for pagination stack
   PAGINATION_STACK: number = 30;
 
@@ -63,7 +62,7 @@ class SearchStore {
   updateBooks(books: IBooksArray, todo: "set" | "add") {
     if (todo === "set") {
       this.booksArray = books;
-    } else if (todo === "add") {
+    } else {
       if (books.books.length !== 0) {
         // Add only new books
         books.books.forEach((book) => {
@@ -83,8 +82,16 @@ class SearchStore {
   updateStartIndex(index: number, todo: "set" | "add") {
     if (todo === "set") {
       this.currentstartIndex = index;
-    } else if (todo === "add") {
+    } else {
       this.currentstartIndex += index;
+    }
+  }
+
+  async loadBooks(todo: "set" | "add") {
+    if (todo === "set") {
+      await this.setBooks();
+    } else {
+      await this.addBooks();
     }
   }
 

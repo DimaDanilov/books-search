@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Categories } from "../../../models/Categories";
@@ -8,6 +8,7 @@ import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
 import { BookCard } from "../../../components/cards/BookCard";
 import { useSearchStore } from "../store/SearchStore";
+import { Loader } from "../../../components/common/Loader";
 
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
@@ -17,9 +18,17 @@ export const BooksListModule = observer(() => {
   const sortQuery = searchParams.get("sort");
   const categoryQuery = searchParams.get("category");
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function loadNewBooks(todo: "set" | "add") {
+    setIsLoading(true);
+    await searchStore.loadBooks(todo);
+    setIsLoading(false);
+  }
+
   useEffect(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
-    searchStore.setBooks();
+    loadNewBooks("set");
   }, [searchStore, searchQuery]);
 
   useEffect(() => {
@@ -27,7 +36,7 @@ export const BooksListModule = observer(() => {
       type: "sort",
       value: Sort[sortQuery as keyof typeof Sort],
     });
-    searchStore.setBooks();
+    loadNewBooks("set");
   }, [searchStore, sortQuery]);
 
   useEffect(() => {
@@ -35,7 +44,7 @@ export const BooksListModule = observer(() => {
       type: "category",
       value: Categories[categoryQuery as keyof typeof Categories],
     });
-    searchStore.setBooks();
+    loadNewBooks("set");
   }, [searchStore, categoryQuery]);
 
   const bookCards = React.useMemo(
@@ -47,11 +56,12 @@ export const BooksListModule = observer(() => {
   );
 
   const onLoadMoreClick = () => {
-    searchStore.addBooks();
+    loadNewBooks("add");
   };
 
   return (
     <SectionContainer>
+      {isLoading && <Loader width="30vw" />}
       <BooksListStatus>
         Found {searchStore.booksArray.totalItems} results
       </BooksListStatus>
