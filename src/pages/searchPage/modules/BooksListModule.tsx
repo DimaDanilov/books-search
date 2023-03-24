@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Categories } from "../../../models/Categories";
@@ -18,17 +18,9 @@ export const BooksListModule = observer(() => {
   const sortQuery = searchParams.get("sort");
   const categoryQuery = searchParams.get("category");
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  async function loadNewBooks(todo: "set" | "add") {
-    setIsLoading(true);
-    await searchStore.loadBooks(todo);
-    setIsLoading(false);
-  }
-
   useEffect(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
-    loadNewBooks("set");
+    searchStore.loadBooks("set");
   }, [searchStore, searchQuery]);
 
   useEffect(() => {
@@ -36,7 +28,7 @@ export const BooksListModule = observer(() => {
       type: "sort",
       value: Sort[sortQuery as keyof typeof Sort],
     });
-    loadNewBooks("set");
+    searchStore.loadBooks("set");
   }, [searchStore, sortQuery]);
 
   useEffect(() => {
@@ -44,7 +36,7 @@ export const BooksListModule = observer(() => {
       type: "category",
       value: Categories[categoryQuery as keyof typeof Categories],
     });
-    loadNewBooks("set");
+    searchStore.loadBooks("set");
   }, [searchStore, categoryQuery]);
 
   const bookCards = React.useMemo(
@@ -56,12 +48,12 @@ export const BooksListModule = observer(() => {
   );
 
   const onLoadMoreClick = () => {
-    loadNewBooks("add");
+    searchStore.loadBooks("add");
   };
 
   return (
     <SectionContainer>
-      {isLoading && <Loader width="30vw" />}
+      {searchStore.isBooksArrayLoading && <Loader width="30vw" />}
       <BooksListStatus>
         Found {searchStore.booksArray.totalItems} results
       </BooksListStatus>

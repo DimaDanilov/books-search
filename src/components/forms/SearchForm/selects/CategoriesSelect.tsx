@@ -23,6 +23,7 @@ export const CategoriesSelect = observer(() => {
         id="categories"
         value={Categories[searchStore.category]}
         onChange={onChange}
+        disabled={searchStore.isBooksArrayLoading}
       >
         <option>{Categories[0]}</option>
         <option>{Categories[1]}</option>

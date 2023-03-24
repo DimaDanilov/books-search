@@ -23,6 +23,7 @@ export const SortSelect = observer(() => {
         id="sort"
         value={Sort[searchStore.sortType]}
         onChange={onChange}
+        disabled={searchStore.isBooksArrayLoading}
       >
         <option>{Sort[0]}</option>
         <option>{Sort[1]}</option>

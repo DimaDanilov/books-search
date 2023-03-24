@@ -38,6 +38,7 @@ const LdsGrid = styled.div<{ width?: string; [x: string]: any }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  pointer-events: none;
   & div {
     position: absolute;
     width: 15%;

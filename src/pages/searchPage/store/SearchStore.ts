@@ -24,6 +24,8 @@ class SearchStore {
     sortType: false,
     category: false,
   };
+  isBooksArrayLoading: boolean = false;
+
   currentstartIndex: number = 0; // First book for pagination stack
   PAGINATION_STACK: number = 30;
 
@@ -87,12 +89,18 @@ class SearchStore {
     }
   }
 
+  setBooksLoadingStatus(status: boolean) {
+    this.isBooksArrayLoading = status;
+  }
+
   async loadBooks(todo: "set" | "add") {
+    this.setBooksLoadingStatus(true);
     if (todo === "set") {
       await this.setBooks();
     } else {
       await this.addBooks();
     }
+    this.setBooksLoadingStatus(false);
   }
 
   async setBooks() {
