@@ -8,7 +8,32 @@ import { globalStyles } from "../../../styles/style";
 import { Container } from "../../../ui/Container";
 import { BookCard } from "../../../components/cards/BookCard";
 import { useSearchStore } from "../store/SearchStore";
-import { Loader } from "../../../components/common/Loader";
+import { IBooksArray } from "../../../models/Book";
+import withLoader from "../../../components/hoc/withLoader";
+
+const BookList = ({
+  booksArray,
+  moreToLoad,
+  onClick,
+}: {
+  booksArray: IBooksArray;
+  moreToLoad: boolean;
+  onClick: (() => void) | undefined;
+}) => {
+  const bookCards = React.useMemo(
+    () =>
+      booksArray.books?.map((book) => <BookCard key={book.id} book={book} />),
+    [booksArray.books.length]
+  );
+
+  return (
+    <SectionContainer>
+      <BooksListStatus>Found {booksArray.totalItems} results</BooksListStatus>
+      <BooksList>{bookCards}</BooksList>
+      {moreToLoad && <PaginationBtn onClick={onClick}>Load more</PaginationBtn>}
+    </SectionContainer>
+  );
+};
 
 export const BooksListModule = observer(() => {
   const searchStore = useSearchStore();
@@ -20,7 +45,7 @@ export const BooksListModule = observer(() => {
 
   useEffect(() => {
     searchStore.reset(); // Reset loading params if go back to previous page
-  }, []);
+  }, [searchStore]);
 
   useEffect(() => {
     searchStore.setPageSettings({ type: "search", value: searchQuery });
@@ -43,29 +68,22 @@ export const BooksListModule = observer(() => {
     searchStore.loadBooks("set");
   }, [searchStore, categoryQuery]);
 
-  const bookCards = React.useMemo(
-    () =>
-      searchStore.booksArray.books?.map((book) => {
-        return <BookCard key={book.id} book={book} />;
-      }),
-    [searchStore.booksArray.books.length]
-  );
-
   const onLoadMoreClick = () => {
     searchStore.loadBooks("add");
   };
 
+  const BookListWithLoader = withLoader(() =>
+    BookList({
+      booksArray: searchStore.booksArray,
+      moreToLoad: searchStore.nextBooksArray.books.length > 0,
+      onClick: onLoadMoreClick,
+    })
+  );
   return (
-    <SectionContainer>
-      {searchStore.isBooksArrayLoading && <Loader width="30vw" />}
-      <BooksListStatus>
-        Found {searchStore.booksArray.totalItems} results
-      </BooksListStatus>
-      <BooksList>{bookCards}</BooksList>
-      {searchStore.nextBooksArray.books.length > 0 && (
-        <PaginationBtn onClick={onLoadMoreClick}>Load more</PaginationBtn>
-      )}
-    </SectionContainer>
+    <BookListWithLoader
+      isLoading={searchStore.isBooksArrayLoading}
+      loaderWidth="30vw"
+    />
   );
 });
 

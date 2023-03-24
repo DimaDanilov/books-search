@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { BookPage } from "./pages/bookPage/BookPage";
 import { SearchPage } from "./pages/searchPage/SearchPage";
+import { BookPage } from "./pages/bookPage/BookPage";
 
 function App() {
   return (
